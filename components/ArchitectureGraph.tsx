@@ -126,7 +126,9 @@ export default function ArchitectureGraph({ tree }: ArchitectureGraphProps) {
       event.subject.fy = null;
     }
 
-    return () => simulation.stop();
+    return () => {
+      simulation.stop();
+    };
   }, [tree]);
 
   return (
