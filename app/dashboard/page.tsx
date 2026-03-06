@@ -84,6 +84,10 @@ export default function DashboardPage() {
     fetchData();
   }, [owner, repo, router]);
 
+  if (!owner || !repo) {
+    return null;
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
