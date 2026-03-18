@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'motion/react';
 import { 
@@ -30,7 +30,7 @@ import CodeComplexity from '@/components/CodeComplexity';
 import RepoActivity from '@/components/RepoActivity';
 import CodeGalaxy from '@/components/CodeGalaxy';
 
-export default function DashboardPage() {
+function DashboardContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const owner = searchParams.get('owner');
@@ -310,5 +310,18 @@ export default function DashboardPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin" />
+        <p className="text-zinc-400 font-medium animate-pulse">Loading dashboard...</p>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   );
 }
