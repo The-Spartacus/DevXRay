@@ -61,9 +61,7 @@ function Connections({ nodes }: { nodes: any[] }) {
           <bufferGeometry attach="geometry">
             <float32BufferAttribute
               attach="attributes-position"
-              count={2}
-              array={new Float32Array([...line[0], ...line[1]])}
-              itemSize={3}
+              args={[new Float32Array([...line[0], ...line[1]]), 3]}
             />
           </bufferGeometry>
           <lineBasicMaterial attach="material" color="#10b981" opacity={0.2} transparent />
