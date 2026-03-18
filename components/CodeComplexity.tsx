@@ -24,11 +24,21 @@ interface CodeComplexityProps {
   tree: any[];
 }
 
+interface ExtensionData {
+  name: string;
+  count: number;
+}
+
+interface ChartDataPoint {
+  name: string;
+  count: number;
+}
+
 export default function CodeComplexity({ tree }: CodeComplexityProps) {
-  const complexityData = useMemo(() => {
+  const complexityData = useMemo<{ chartData: ChartDataPoint[], topExtensions: ExtensionData[] }>(() => {
     // Mock complexity based on file depth and extensions
-    const fileTypes: any = {};
-    const depthData: any = {};
+    const fileTypes: Record<string, number> = {};
+    const depthData: Record<number, number> = {};
     
     tree.forEach(item => {
       const depth = item.path.split('/').length;
@@ -40,15 +50,15 @@ export default function CodeComplexity({ tree }: CodeComplexityProps) {
       }
     });
 
-    const chartData = Object.entries(depthData).map(([depth, count]) => ({
+    const chartData: ChartDataPoint[] = Object.entries(depthData).map(([depth, count]) => ({
       name: `Level ${depth}`,
-      count
+      count: count as number
     }));
 
-    const topExtensions = Object.entries(fileTypes)
-      .sort((a: any, b: any) => b[1] - a[1])
+    const topExtensions: ExtensionData[] = Object.entries(fileTypes)
+      .sort((a, b) => (b[1] as number) - (a[1] as number))
       .slice(0, 5)
-      .map(([ext, count]) => ({ name: ext, count }));
+      .map(([ext, count]) => ({ name: ext, count: count as number }));
 
     return { chartData, topExtensions };
   }, [tree]);
