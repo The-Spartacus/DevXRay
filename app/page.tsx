@@ -6,7 +6,7 @@ import { Search, Github, Zap, Shield, BarChart3, Box, Cpu, ArrowRight, Loader2 }
 import { useRouter } from 'next/navigation';
 
 export default function LandingPage() {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState('https://github.com/');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
